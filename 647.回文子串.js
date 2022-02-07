@@ -84,3 +84,5 @@ const countSubstrings2 = (s) => {
 }
 
 console.log(countSubstrings3('abc'))
+let a = '13'
+let b = '54we'

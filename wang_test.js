@@ -8,3 +8,6 @@ console.log(`${54}` - `${45}`)
 
 let d = '241'
 let ge = 'awf'
+
+let t= '13'
+let n = '14235'
