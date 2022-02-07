@@ -6,5 +6,10 @@ ans.add([4, 5, 6].toString())
 
 console.log(`${54}` - `${45}`)
 
+
 let c = 5
 let d =9
+
+let b = 5
+let a = 6
+
