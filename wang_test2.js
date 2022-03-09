@@ -1,3 +1,3 @@
-let a = [1,2,3]
-a.shift()
-console.log(a)
+var example = require('../../WebProject/javascript语法/example.js');//如果参数字符串以“./”开头，则表示加载的是一个位于相对路径
+console.log(example.x); // 5
+console.log(example.addX(1)); // 6
