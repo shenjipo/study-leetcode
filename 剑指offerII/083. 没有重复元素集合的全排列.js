@@ -3,11 +3,11 @@
  * @return {number[][]}
  */
 var permute = function (nums) {
-    let ans = []
+    let ans = new Set()
     let visited = new Array(nums.length).fill(0)
     const dfs = (temp) => {
         if (temp.length === nums.length) {
-            ans.push([...temp])
+            ans.add(temp.toString())
             return
         }
         for (let i = 0; i < nums.length; i++) {
@@ -21,6 +21,10 @@ var permute = function (nums) {
         }
     }
     dfs([])
-    return ans
+    return Array.from(ans).map(item => {
+        return item.split(',').map(i => {
+            return parseInt(i)
+        })
+    })
 };
 console.log(permute([1, 2, 3]))
