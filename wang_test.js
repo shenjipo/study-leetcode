@@ -1,4 +1,14 @@
 //利用数组提供的push()方法和shift()方法实现队列
-let a = new Set('abcc' + 'ap')
+const dfs = (node) => {
 
-console.log(a.size)
+}
+
+function dfs2(node) {
+    return {
+        `div`click`div`
+    }
+}
+
+const inst = dfs2('12')
+inst(1, 2)
+
