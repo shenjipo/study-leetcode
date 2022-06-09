@@ -1,17 +1,19 @@
-// setTimeout((i) => {
-//     console.log(i)
-// }, 1000)
+let arr = new Array(5).fill(0)
+console.log(arr.__proto__ === Array.prototype)
 
-function print(i) {
-    console.log(i)
-    if (i >= 4)
-        return
-    new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve(i + 1)
-        }, 1000)
-    }).then(res => {
-        print(res)
-    })
-}
-print(0)
+arr.__proto__ = null
+
+// Array.prototype = null
+
+console.log(Array.prototype)
+
+// console.log(Array.prototype.__proto__ === Object.prototype)
+// console.log(Object.prototype.__proto__ === null)
+//
+//
+//
+// console.log(Array.__proto__ === Function.prototype)
+// console.log(Function.prototype.__proto__ === Object.prototype)
+//
+//
+// console.log(Object.__proto__ === Function.prototype)
