@@ -1,10 +1,10 @@
 window.number = 2;
 var obj = {
     number: 3,
-    db1: (function(){
+    db1: (function () {
         console.log(this);
         this.number *= 4;
-        return function(){
+        return function () {
             console.log(this);
             this.number *= 5;
         }

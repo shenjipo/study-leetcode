@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    let callback = function (par) {
+        console.log(par)
+    }
+    for (var i = 1; i <= 5; i++) {
+
+        setTimeout(callback(i), i * 1000)
+    }
+
+    //  函数作为返回值
+
+    function makeFn() {
+        let msg = "hello Closure!"
+        return function () {
+            console.log(msg)
+        }
+    }
+
+    let fn = makeFn()
+    fn()
+</script>
+</html>

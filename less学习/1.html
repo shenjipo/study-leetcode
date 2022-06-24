@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.7.2/less.min.js"></script>
+    <style>
+        div.box1 {
+            border: 1px rgb(5, 248, 114) solid;
+            background: rgb(221, 132, 214);
+            background-clip: content-box;
+            width: 400px;
+            padding: 10px;
+        }
+
+        div.box1:before {
+            content: "我是前面的before";
+            color: rgb(177, 81, 13);
+        }
+
+        div.box1:after {
+            content: "我是后面的after";
+            color: rgb(243, 29, 72);
+        }
+
+        div.box2:first-letter {
+            font-size: 3em;
+            font-weight: bold;
+        }
+
+        div.box2:first-line {
+            color: rgb(101, 245, 6);
+        }
+        div.section::selection{
+            color: rgb(247, 8, 135);
+        }
+        input.placeholder::placeholder{
+            background-color: rgb(80, 156, 231);
+            color: rgb(19, 235, 235);
+        }
+        a{
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        a.link:link{
+            background-color: rgb(71, 130, 240);
+        }
+        a.visited:visited{
+            color: rgb(218, 107, 208);
+            background-color: rgb(218, 107, 208);
+        }
+        a.hover:hover{
+            background-color: rgb(221, 51, 142);
+        }
+        a.active:active{
+            font-size: 2em;
+        }
+        a.focus:focus{
+            background-color: rgb(247, 142, 4);
+        }
+
+    </style>
+</head>
+<body>
+<div class="box1">
+    元素内容
+</div>
+<div class="box2">
+    第二个box
+</div>
+<div class="section">
+    fawjlfalfjglasgfjlasj
+</div>
+<input type="text" class="placeholder" placeholder="输入">
+<hr>
+<a href="#" class="link">正常链接</a>
+<a href="#" class="visited">点击过后</a>
+<a href="#" class="hover">悬停时</a>
+<a href="#" class="active">被激活状态</a>
+<a href="#" class="focus">获得焦点</a>
+<span style="padding-top: 20px">你好啊</span>
+</body>
+</html>

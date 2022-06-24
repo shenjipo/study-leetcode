@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+没有防抖的Input <input type="text" id="debounce1">
+防抖的Input <input type="text" id="debounce2">
+节流的Input <input type="text" id="throttle">
+</body>
+<script>
+    // 没有防抖
+    function ajax(content) {
+        console.log('ajax request ' + content)
+    }
+
+    let inputa = document.getElementById('debounce1')
+
+    inputa.addEventListener('keyup', function (e) {
+        ajax(e.target.value)
+    })
+
+    // 防抖函数
+    function debounce(fun, delay) {
+        let timer
+        return function (args) {
+            clearTimeout(timer)
+            timer = setTimeout(() => {
+                fun.call(this, args)
+            }, delay)
+        }
+    }
+
+    let debounce2 = document.getElementById('debounce2')
+
+    let debounceAjax = debounce(ajax, 500)
+
+    debounce2.addEventListener('keyup', function (e) {
+        debounceAjax(e.target.value)
+    })
+
+    // 下面是节流
+
+    function throttle(fun, delay) {
+        let last, deferTimer
+        return function (args) {
+            let now = +new Date()
+            if (now - last > delay) {
+                fun.call(this, args)
+            }
+        }
+    }
+
+    let throttleAjax = throttle(ajax, 1000)
+
+    let inputc = document.getElementById('throttle')
+    inputc.addEventListener('keyup', function (e) {
+        throttleAjax(e.target.value)
+    })
+
+</script>
+</html>

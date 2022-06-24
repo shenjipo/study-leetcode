@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="mydiv" style="background-color: red;height: 200px;width: 200px;position: relative;top: 0;left: 0">
+
+</div>
+</body>
+<script>
+    // html只有一个div，并且有设置position
+    const ele = document.getElementById("mydiv");
+    ele.addEventListener("mousedown", e => {
+        // 记录首次位置，也是为了存放上次位置
+        let x0 = e.clientX;
+        let y0 = e.clientY;
+        const handleMove = ({clientX, clientY, target}) => {
+            // 本次位置和上次位置的变化量
+            ele.style.left = `${parseFloat(ele.style.left) + clientX - x0}px`;
+            ele.style.top = `${parseFloat(ele.style.top) + clientY - y0}px`;
+            // 上次位置更新
+            x0 = clientX;
+            y0 = clientY;
+        };
+        ele.addEventListener("mousemove", handleMove);
+        ele.addEventListener("mouseup", () => {
+            ele.removeEventListener("mousemove", handleMove);
+        });
+    });
+    console.log(parseFloat('123', 10))
+</script>
+</html>

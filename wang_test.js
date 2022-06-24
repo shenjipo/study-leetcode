@@ -1,14 +1,19 @@
-//利用数组提供的push()方法和shift()方法实现队列
-const dfs = (node) => {
+async function myTest() {
+
+    new Promise((resolve, reject) => {
+        setTimeout(() => {
+            try {
+                exit()
+            } catch (e) {
+                reject(e)
+            }
+        }, 1000)
+    }).then(res => {
+
+    }, error => {
+        console.log(error)
+    })
 
 }
 
-function dfs2(node) {
-    return {
-        `div`click`div`
-    }
-}
-
-const inst = dfs2('12')
-inst(1, 2)
-
+myTest()
