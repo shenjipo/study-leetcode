@@ -9,9 +9,7 @@ var reverseWords = function (s) {
         if (inputs[i]) {
             ans.push(inputs[i])
         }
-
     }
-
     return ans
 };
 

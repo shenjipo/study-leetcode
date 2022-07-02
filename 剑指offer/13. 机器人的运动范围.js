@@ -50,5 +50,5 @@ var movingCount = function (m, n, k) {
     return count
 };
 
-console.log(movingCount(2, 3, 1))
+console.log(movingCount(38, 15, 9))
 
