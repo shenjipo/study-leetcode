@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app" style="width: 500px;height: 500px;margin: 0 auto">
+    <div style="display: flex;justify-content: center">
+        <form>
+            <input type="text" v-model="number">
+            <button type="button" v-click="increment">增加</button>
+        </form>
+    </div>
+    <div>
+        <h3 v-bind="number" style="text-align: center"></h3>
+    </div>
+</div>
+</body>
+<script>
+    function myVue(options) {
+        this.$data = options.data
+        this._binding = {}
+        this.$methods = options.methods
+        this._init(options)
+    }
+
+    myVue.prototype._init = function (options) {
+        this.$el = document.querySelector(options.el);
+
+        this._obverse(options.data);
+        this._compile(this.$el)
+    }
+
+    myVue.prototype._obverse = function (obj) {
+        Object.keys(obj).forEach(key => {
+            this._binding[key] = {
+                _directives: []
+            }
+            if (typeof obj[key] === 'object') {
+                this.observe(obj[key])
+            }
+            let value = obj[key]
+            Object.defineProperty(this.$data, key, {
+                enumerable: true,
+                configurable: true,
+                get: function () {
+                    return value
+                },
+                set: (newValue) => {
+                    if (value !== newValue) {
+                        value = newValue
+                        this._binding[key]._directives.forEach(item => {
+                            item._update()
+                        })
+                    }
+                }
+            })
+        })
+    }
+
+    myVue.prototype._compile = function (root) {
+        let nodes = Array.from(root.children)
+        nodes.forEach(item => {
+            if (item.children.length) {
+                this._compile(item)
+            }
+            if (item.hasAttribute('v-click')) {
+                let methodName = item.getAttribute('v-click');
+                item.onclick = this.$methods[methodName].bind(this.$data);
+            }
+            if (item.hasAttribute('v-bind')) {
+                // 单向绑定， 当变量发生变化时改变dom元素的值
+                let valName = item.getAttribute('v-bind');
+                console.log(this._binding)
+                this._binding[valName]._directives.push(new Watcher('text', item, this, valName, 'innerHTML'))
+            }
+            if (item.hasAttribute('v-model') && (item.tagName = 'INPUT' || item.tagName == 'TEXTAREA')) {
+                //双向绑定 改变dom元素的值还必须改变对应变量的值，所以需要写一个input监听函数
+                let valName = item.getAttribute('v-model');
+                console.log(this._binding, valName)
+                this._binding[valName]._directives.push(new Watcher('input', item, this, valName, 'value'))
+                item.addEventListener('input', () => {
+                    this.$data[valName] = item.value;
+                });
+            }
+        })
+
+    }
+
+    function Watcher(name, el, vm, exp, attr) {
+        this.name = name;         //指令名称，例如文本节点，该值设为"text"
+        this.el = el;             //指令对应的DOM元素
+        this.vm = vm;             //指令所属myVue实例
+        this.exp = exp;           //指令对应的值，本例如"number"
+        this.attr = attr;         //绑定的属性值，本例为"innerHTML"
+
+        this._update();
+    }
+
+    Watcher.prototype._update = function () {
+        this.el[this.attr] = this.vm.$data[this.exp];
+    }
+
+    window.onload = function () {
+        var app = new myVue({
+            el: '#app',
+            data: {
+                number: 0,
+                count: 0,
+            },
+            methods: {
+                increment: function () {
+                    this.number++;
+                },
+                incre: function () {
+                    this.count++;
+                }
+            }
+        })
+    }
+</script>
+</html>

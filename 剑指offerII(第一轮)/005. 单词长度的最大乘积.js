@@ -9,7 +9,7 @@ var maxProduct = function (words) {
         for (let s of w) {
             bit |= 1 << (s.charCodeAt() - 'a'.charCodeAt())
         }
-
+        console.log(bit)
         const wordMaxLen = map.has(bit) ? Math.max(map.get(bit), w.length) : w.length
 
         map.set(bit, wordMaxLen)
@@ -17,7 +17,7 @@ var maxProduct = function (words) {
     let max = 0
     for (let [i, vi] of map) {
         for (let [j, vj] of map) {
-            if ((i & j) == 0) max = Math.max(max, vi * vj)
+            if ((i & j) === 0) max = Math.max(max, vi * vj)
         }
     }
 

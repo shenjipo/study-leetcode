@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="button1" onclick="newSend1()">防抖按钮</button>
+<button id="button2" onclick="newSend2()">节流按钮</button>
+</body>
+<script>
+    function sendReq() {
+
+        console.log('获取用户数据')
+
+    }
+
+    function debounce(fn, delay) {
+        let timer
+        return function (...args) {
+            clearTimeout(timer)
+            timer = setTimeout(() => {
+                fn(...args)
+            }, delay)
+        }
+    }
+
+    let newSend1 = debounce(sendReq, 1000)
+
+    // 节流
+    function throttle(fn, delay) {
+        let lastTime = new Date().getTime()
+        let nextTime = 0
+        setTimeout(() => {
+            nextTime = delay
+        }, delay)
+        return function (...args) {
+            let currTime = new Date().getTime()
+            if (currTime - lastTime > delay) {
+                setTimeout(() => {
+                    fn(args)
+                }, delay)
+                lastTime = currTime
+            }
+        }
+    }
+
+    function throttle2(fn, delay) {
+        let nextTime = 0
+        setTimeout(() => {
+            nextTime = delay
+        }, delay)
+        return function (...args) {
+            if (nextTime === delay) {
+                fn(args)
+                nextTime = 0
+                setTimeout(() => {
+                    nextTime = delay
+                }, delay)
+            }
+        }
+    }
+
+    let newSend2 = throttle2(sendReq, 1000)
+
+</script>
+</html>
