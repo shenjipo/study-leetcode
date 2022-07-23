@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box1 {
+            width: 200px;
+            height: 200px;
+            overflow: hidden;
+            /*超出文本文末显示省略号*/
+            text-overflow: ellipsis;
+            /*不换行*/
+            white-space: nowrap;
+            background-color: #1a8484;
+        }
+
+        .wrap {
+            width: 200px;
+            height: 50px;
+            overflow: hidden;
+        }
+        .wrap::before {
+            float: left;
+            width: 1px;
+            height: 50px;
+            content: '';
+        }
+
+        .content {
+            float: right;
+            width: 100%;
+            line-height: 25px;
+            margin-left: -1px;
+            /*对于 中文 文本，可在任意字符间断行。*/
+            word-break: break-all;
+        }
+
+        .wrap::after {
+            float: right;
+            width: 20px;
+            height: 25px;
+            line-height: 25px;
+            content: '...';
+            margin-left: -20px;
+            padding-right: 1px;
+            position: relative;
+            left: 100%;
+            top: -25px;
+            background-color: white;
+            box-shadow: -10px 0 10px white;
+        }
+    </style>
+</head>
+<body>
+<div class="box1">
+    单行文本溢出显示省略号
+    这里各个效果和两个左浮动元素效果正好相反，可以结合上面去理解
+</div>
+<div class="wrap">
+    <div class="content">
+        多行文本溢出显示省略号
+        这里各个效果和两个左浮动元素效果正好相反，可以结合上面去理解
+    </div>
+</div>
+</body>
+</html>

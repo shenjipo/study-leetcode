@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+    </style>
+</head>
+<body>
+<div style="height: 200px;width: 200px;background-color: red">
+    这是div
+</div>
+<span style="height: 200px;width: 200px;background-color: #999">
+    这是span
+</span>
+<span style="height: 200px;width: 200px;background-color: #999;margin-top: 100px; margin-left: 100px">
+    设置margin-top无效，设置margin-left有效
+</span>
+</body>
+<script>
+    // 典型的块级元素有 p div h1-h6
+    // 典型的行内元素有 span a
+    // 块级元素的宽度默认为父元素的宽度100%    行内元素的宽度默认自适应内容
+    // 跨级元素可以直接设置高度宽度  四个边距    行内元素只能设置本身的水平方向边距
+    // 块级元素可以有任意元素  行内元素不允许有子元素
+</script>
+</html>

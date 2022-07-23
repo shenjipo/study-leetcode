@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .box1 {
+            width: 200px;
+            height: 200px;
+            box-sizing: border-box;
+            background-color: #1a8484;
+        }
+        .box1:hover{
+            background-color: antiquewhite;
+            width: 100px;
+            height: 100px;
+        }
+        .box2{
+            width: 400px;
+            height: 200px;
+            box-sizing: border-box;
+            background-color: #24bf1e;
+        }
+        .box2::after{
+            content: '这是after';
+            background-color: antiquewhite;
+        }
+        .box2::before{
+            content: '这是before';
+            background-color: aqua;
+        }
+    </style>
+</head>
+<body>
+<div class="box1">
+    测试伪类hover
+</div>
+<div class="box2">
+    测试伪元素before和after
+</div>
+
+</body>
+<script>
+    /*
+    * 什么是伪元素？什么是伪类？
+    * 伪类表示元素的某种状态，例如hover，伪元素表示元素的某一个部分，这个部分看起来像是一个独立的元素，但是仅仅存在于css中，例如before和after
+    * 为元素比较少，常用的就是before after
+    * 伪类比较多，常用的就是一些状态 比如 hover focus active visited
+    * */
+</script>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .box1{
+            width: 200px;
+            height: 200px;
+            padding: 20px;
+            border: 20px #666 solid;
+            box-sizing: border-box;
+            background-color: aqua;
+        }
+        .box2{
+            width: 200px;
+            height: 200px;
+            padding: 20px;
+            border: 20px #666 solid;
+            box-sizing: content-box;
+            background-color: #1a8484;
+        }
+    </style>
+</head>
+<body>
+<div class="box1">
+    IE盒子模型
+</div>
+<div class="box2">
+    W3标准盒子模型
+</div>
+</body>
+<script>
+    // html中的的所有元素都采用盒子模型来计算元素的位置以及大小
+    // 元素盒子模型包含四个部分，从外到内分布时margin border padding content
+    // 盒子模型有两种，分别时IE盒子模型与W3标准盒子模型
+    // IE盒子模型的width和height包含了content padding border 而W3标准盒子模型只包含了content
+
+    /*
+    * 注意点
+    * margin属性为负值时对于盒子模型位置的影响
+    * `margin-top` 元素自身会向上移动，同时会影响下方的元素会向上移动；
+
+`margin-botom` 元素自身不会位移，但是会减少自身供css读取的高度，从而影响下方的元素会向上移动。
+
+`margin-left` 元素自身会向左移动，同时会影响其它元素；
+
+`margin-right` 元素自身不会位移，但是会减少自身供css读取的宽度，从而影响右侧的元素会向左移动；
+
+有什么用？不使用浮动和flex也能够实现两列布局，通过left和top控制元素位置。
+
+通过负边距进行偏移的元素，它会放弃偏移前占据的空间，这样它后面文档流中的其它元素就会“流”过来填充这部分空间。
+文档流只能是后面的流向前面的，即文档流只能向左或向上流动，不能向下或向右移动
+    * */
+</script>
+</html>
