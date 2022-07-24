@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *body{
+            margin: 0;
+            padding: 0;
+        }
+        .header{
+            width: 100%;
+            height: 200px;
+            background-color: #999999;
+        }
+        .footer{
+            width: 100%;
+            height: 200px;
+            background-color: #999999;
+            border: 5px #555 solid;
+        }
+        .middle{
+            width: 100%;
+            height: 200px;
+            background-color: #2be5e5;
+            float: left;
+        }
+        .left{
+            width: 100px;
+            height: 200px;
+            background-color: #2b44e5;
+            float: left;
+        }
+        .right{
+            width: 100px;
+            height: 200px;
+            background-color: #2b44e5;
+            float: left;
+        }
+    /*    方法2*/
+    /*    .wrap{*/
+    /*        overflow: hidden;*/
+    /*    }*/
+
+    /*    方法4*/
+        .clear-fix::after{
+            content: '020';
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    header
+</div>
+<div class="wrap clear-fix">
+    <div class="middle">middle</div>
+    <div class="left">left</div>
+    <div class="right">right</div>
+<!--    方法1-->
+<!--    <div style="clear: both"></div>-->
+</div>
+<!--方法3 style="clear: both"-->
+<div class="footer">
+    footer
+</div>
+
+</body>
+<script>
+    /*
+    * 在这种情况下由于div wrap容器内部有元素设置了浮动，外层div wrap的高度无法被正确的撑开，导致后面的footer被影响
+    * 影响包括（1）：背景不能显示 （2）：边框不能撑开 （3）：margin 设置值不能正确显示
+    *清除浮动的方法可以分成两类：
+    * 一是利用 clear 属性，包括在浮动元素末尾添加一个带有 clear: both 属性的空 div 来闭合元素，其实利用 :after 伪元素的方法也是在元素末尾添加一个内容为一个点并带有 clear: both 属性的元素实现的。
+
+二是触发浮动元素父元素的 BFC (Block Formatting Contexts, 块级格式化上下文)，使到该父元素可以包含浮动元素，关于这一点。
+    * */
+</script>
+</html>

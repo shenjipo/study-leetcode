@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <div style="height: 200px;width: 200px;background-color: #24bf1e;margin-bottom: 10px">
+
+    </div>
+<!--    只有50px生效  上面的10px不生效-->
+    <div style="height: 200px;width: 200px;background-color: #2be5e5;margin-top: 50px">
+
+    </div>
+</div>
+<div style="width: 200px;height: 200px;margin-top: 10px;background-color: #a72626;">
+    <div style="width: 50px;height: 50px;background-color: #555555;margin-top: 200px">
+
+    </div>
+</div>
+</body>
+<script>
+    /*
+    * 1.margin合并
+    * 两个兄弟结构的元素在垂直方向上的margin是合并的。比如，给上面的元素设置margin-bottom，给下面的元素设置margin-top时，margin取得是这两个值之间的最大值。
+    * 2.margin塌陷
+    * 父子嵌套元素在垂直方向的margin会合并，他们margin会取其中最大的值。
+    * 当子元素的margin-top大于父元素的margin-top时，父元素会跟着子元素向下移动，也就是发生了margin塌陷。
+    * */
+</script>
+</html>

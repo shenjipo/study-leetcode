@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="width: 200px;height: 200px;background-color: #24bf1e">
+    未设置子元素div的left top bottom right
+    <div style="width: 50px;height: 50px;background-color: #555555;position: absolute">
+        1
+    </div>
+</div>
+<div style="width: 200px;height: 200px;background-color: #24bf1e;margin-top: 10px">
+    设置子元素div的left 与top
+    <div style="width: 50px;height: 50px;background-color: #555555;position: absolute;left:50px;top: 0">
+        2
+    </div>
+</div>
+<div style="width: 200px;height: 200px;background-color: #24bf1e;margin-top: 10px;position:relative;">
+    子绝父相  设置子元素div的left
+    <div style="width: 50px;height: 50px;background-color: #555555;position: absolute;left:50px;top: 50px">
+        3
+    </div>
+</div>
+</body>
+<script>
+    /*
+    *position有四种属性
+        absolute：相对于它的第一个position值不为static的祖先元素来进行定位；
+        relative：相对于元素本身的正常位置来进行定位；
+        fixed：   生成绝对定位的元素，相对于浏览器窗口进行定位；
+        static：  默认值，没有定位， 元素出现在正常流中；
+    *  重点在与position的定位点如何判断，分两种情况
+    * (1)子元素设置了position:absolute但是未设置left top right bottom，那么按照正常文档流进行定位
+    *
+    * (2)子元素设置了position:absolute，而且设置了left top right bottom(如果仅仅设置left或者right，那么垂直方向上仍然按照正常文档流布局，反之同理)
+    *
+    *
+    *
+    *经典用法 子绝（绝对定位）父相（相对定位）
+    * 注意 只有非static的元素才能设置z-index属性，此外设置了这些flex、transform、opacity、filter、will-change属性的元素也可以使用z-index
+    *
+    * */
+</script>
+</html>

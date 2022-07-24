@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+        }
+        .wrap{
+            height: 500px;
+            background-color: #555555;
+            position: relative;
+        }
+        .content{
+            width: 50px;
+            height: 50px;
+            background-color: #2be5e5;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            /*方法1*/
+            /*margin-top: -25px;*/
+            /*margin-left: -25px;*/
+            /*方法2*/
+            transform: translate(-50%,-50%);
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="content">1243</div>
+</div>
+</body>
+</html>

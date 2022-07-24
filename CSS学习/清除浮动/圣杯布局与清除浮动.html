@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *body{
+            margin: 0;
+            padding: 0;
+        }
+        .header{
+            width: 100%;
+            height: 200px;
+            background-color: #999999;
+        }
+        .footer{
+            width: 100%;
+            height: 200px;
+            background-color: #999999;
+            border: 5px #555 solid;
+            margin-left: 100px;
+        }
+        .middle{
+            width: 100%;
+            height: 200px;
+            background-color: #2be5e5;
+            float: left;
+        }
+        .left{
+            width: 100px;
+            height: 200px;
+            background-color: #2b44e5;
+            float: left;
+        }
+        .right{
+            width: 100px;
+            height: 200px;
+            background-color: #2b44e5;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    header
+</div>
+<div class="wrap">
+    <div class="middle">middle</div>
+    <div class="left">left</div>
+    <div class="right">right</div>
+</div>
+<div class="footer">
+    footer
+</div>
+
+</body>
+<script>
+    /*
+    * 在这种情况下由于div wrap容器内部有元素设置了浮动，外层div wrap的高度无法被正确的撑开，导致后面的footer被影响
+    * 影响包括（1）：背景不能显示 （2）：边框不能撑开 （3）：margin 设置值不能正确显示
+    * */
+</script>
+</html>
