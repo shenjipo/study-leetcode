@@ -13,14 +13,14 @@
  */
 var insert = function (head, insertVal) {
     if (!head) {
-        let newNode =  new Node(insertVal, null)
+        let newNode = new Node(insertVal, null)
         newNode.next = newNode
         return newNode
     }
     console.log(head.val)
     let newNode = new Node(insertVal, null)
     let [curr, pre] = [head.next, head]
-    while (curr!==head) {
+    while (curr !== head) {
         if (curr.val < pre.val) {
             if (insertVal < curr.val || insertVal >= pre.val)
                 break
@@ -32,7 +32,7 @@ var insert = function (head, insertVal) {
             pre = pre.next
         }
     }
-    console.log(curr.val,pre.val)
+    console.log(curr.val, pre.val)
     pre.next = newNode
     newNode.next = curr
     return head

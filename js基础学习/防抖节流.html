@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <button id="button1" onclick="newSend1()">防抖</button>
+    <button id="button2" onclick="newSend2()">节流</button>
+</div>
+</body>
+
+<script>
+    function sendMsg() {
+        setTimeout(() => {
+            console.log(666)
+        })
+    }
+
+    function debounce(fn, delay) {
+        let timer = null
+        return function (...args) {
+            if (timer) {
+                clearTimeout(timer)
+            }
+            timer = setTimeout(() => {
+                fn.call(this, args)
+            }, delay)
+        }
+    }
+
+    let newSend1 = debounce(sendMsg, 500)
+
+    function throttle(fn, delay) {
+        let timer = null
+        return function (...args) {
+            if (!timer) {
+                timer = setTimeout(() => {
+                    fn()
+                    timer = null
+                }, delay)
+            }
+        }
+    }
+    let newSend2 = throttle(sendMsg, 500)
+</script>
+</html>
