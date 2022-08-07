@@ -1,17 +1,11 @@
-window.number = 2;
-var obj = {
-    number: 3,
-    db1: (function(){
-        console.log(this);
-        this.number *= 4;
-        return function(){
-            console.log(this);
-            this.number *= 5;
-        }
-    })()
+let value = {
+    name: 'wang'
 }
-var db1 = obj.db1;
-db1();
-obj.db1();
-console.log(obj.number);     // 15
-console.log(window.number);  // 40
+let vm = new Proxy(value, {
+    set(target, p, value, receiver) {
+        console.log(target, p, value, receiver)
+        target[p] = value
+    }
+})
+vm.name = 'xing'
+console.log(vm)

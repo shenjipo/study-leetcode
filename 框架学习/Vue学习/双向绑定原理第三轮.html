@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app" style="width: 500px;height: 500px;margin: 0 auto">
+    <div style="display: flex;justify-content: center">
+        <form>
+            <input type="text" v-model="number">
+            <button type="button" v-click="increment">增加</button>
+        </form>
+    </div>
+    <div>
+        <h3 v-bind="number" style="text-align: center"></h3>
+    </div>
+</div>
+</body>
+<script>
+    function myVue(options) {
+        this.$options = options
+        this.$methods = options.methods
+        this.$data = options.data
+        this._binding = {}
+        this._init(options)
+    }
+
+    myVue.prototype._init = function () {
+        this._observer(this.$data)
+        this._compile(document.querySelector(this.$options.el))
+    }
+    myVue.prototype._observer = function (data) {
+        Object.keys(data).forEach(key => {
+            let currData = data[key]
+            this._binding[key] = {
+                _directives: []
+            }
+            if (typeof currData === 'object') {
+                this._observer(data[key])
+            }
+            new Proxy(this.$data, {
+                get() {
+                    return currData
+                },
+                set: (newValue) => {
+                    currData = newValue
+                    this._binding[key]._directives.forEach(item => {
+                        item.update()
+                    })
+
+                }
+            })
+            // Object.defineProperty(this.$data, key, {
+            //     get() {
+            //         return currData
+            //     },
+            //     set: (newValue) => {
+            //         currData = newValue
+            //         this._binding[key]._directives.forEach(item => {
+            //             item.update()
+            //         })
+            //
+            //     }
+            // })
+        })
+    }
+    myVue.prototype._compile = function (root) {
+        if (!root) return
+        let children = Array.from(root.children)
+        children.forEach(item => {
+            if (item.children.length) {
+                this._compile(item)
+            }
+            if (item.hasAttribute('v-model')) {
+                let valName = item.getAttribute('v-model');
+
+                this._binding[valName]._directives.push(new Watcher(item, 'value', this, valName,))
+                item.addEventListener('input', () => {
+                    this.$data[valName] = item.value;
+                });
+            }
+            if (item.hasAttribute('v-bind')) {
+                let valName = item.getAttribute('v-bind')
+                this._binding[valName]._directives.push(new Watcher(item, 'innerHTML', this, valName))
+            }
+            if (item.hasAttribute('v-click')) {
+                let methodName = item.getAttribute('v-click')
+                item.onclick = this.$methods[methodName].bind(this.$data)
+            }
+        })
+
+    }
+
+    function Watcher(realNode, attribute, vrNode, key) {
+        this.realNode = realNode
+        this.attribute = attribute
+        this.vrNode = vrNode
+        this.key = key
+
+    }
+
+    Watcher.prototype.update = function () {
+
+        this.realNode[this.attribute] = this.vrNode.$data[this.key]
+    }
+    window.onload = function () {
+        var app = new myVue({
+            el: '#app',
+            data: {
+                number: 0,
+                count: 0,
+            },
+            methods: {
+                increment: function () {
+
+                    this.number++;
+                },
+            }
+        })
+    }
+</script>
+</html>
