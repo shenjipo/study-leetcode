@@ -5,27 +5,14 @@
     <title>Title</title>
 </head>
 <body>
+<div style="background-color: #2be5e5; width: 200px; height: 200px">
 
+</div>
+<div style="background-color: #a72626;height: 200px;width: 200px; position:relative; right: 10px">
+
+</div>
 </body>
 <script>
-    let callback = function (par) {
-        console.log(par)
-    }
-    for (var i = 1; i <= 5; i++) {
 
-        setTimeout(callback(i), i * 1000)
-    }
-
-    //  函数作为返回值
-
-    function makeFn() {
-        let msg = "hello Closure!"
-        return function () {
-            console.log(msg)
-        }
-    }
-
-    let fn = makeFn()
-    fn()
 </script>
 </html>

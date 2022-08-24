@@ -3,8 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .demo {
+            background: #a72626;
+            height: 500px;
+            width: 500px;
+        }
+    </style>
 </head>
 <body>
+<!--不占据空间，无法响应点击事件-->
+<div class="demo" style="display: none">
 
+</div>
+<!-占据空间，无法响应点击事件--->
+<div class="demo" style="visibility: hidden">
+
+</div>
+<!--占据空间，响应点击事件-->
+<div class="demo" style="opacity: 0">
+
+</div>
+<!--不占据空间，无法响应点击事件-->
+<div class="demo" style="width: 0;height: 0;overflow: hidden">
+
+</div>
+<!--元素不可见，不影响布局-->
+<div class="demo" style="position:absolute; left: -9999px; top: -9999px">
+
+</div>
 </body>
+<script>
+    /*
+    *
+    *
+    * */
+</script>
 </html>
