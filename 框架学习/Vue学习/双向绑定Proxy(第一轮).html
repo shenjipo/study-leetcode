@@ -18,89 +18,89 @@
 </div>
 </body>
 <script>
-    function myVue(options) {
-        this.$options = options
-        this.$methods = options.methods
-        this.$data = options.data
-        this._binding = {}
-        this._init(options)
-    }
+  function myVue(options) {
+    this.$options = options
+    this.$methods = options.methods
+    this.$data = options.data
+    this._binding = {}
+    this._init(options)
+  }
 
-    myVue.prototype._init = function () {
-        this.$data = this._observer()
-        this._compile(document.querySelector(this.$options.el))
-    }
-    myVue.prototype._observer = function () {
-        return new Proxy(this.$data, {
-            set: (target, key, newValue) => {
-                target[key] = newValue
-                this._binding[key]._directives.forEach(item => {
-                    item.update()
-                })
-            }
+  myVue.prototype._init = function () {
+    this.$data = this._observer()
+    this._compile(document.querySelector(this.$options.el))
+  }
+  myVue.prototype._observer = function () {
+    return new Proxy(this.$data, {
+      set: (target, key, newValue) => {
+        target[key] = newValue
+        this._binding[key]._directives.forEach(item => {
+          item.update()
         })
-    }
-    myVue.prototype._compile = function (root) {
-        if (!root) return
-        let children = Array.from(root.children)
-        children.forEach(item => {
-            if (item.children.length) {
-                this._compile(item)
-            }
-            if (item.hasAttribute('v-model')) {
-                let valName = item.getAttribute('v-model');
-                if (!this._binding.hasOwnProperty(valName)) {
-                    this._binding[valName] = {
-                        _directives: []
-                    }
-                }
-                this._binding[valName]._directives.push(new Watcher(item, 'value', this, valName,))
-                item.addEventListener('input', () => {
-                    this.$data[valName] = item.value;
-                });
-            }
-            if (item.hasAttribute('v-bind')) {
-                let valName = item.getAttribute('v-bind')
-                if (!this._binding.hasOwnProperty(valName)) {
-                    this._binding[valName] = {
-                        _directives: []
-                    }
-                }
-                this._binding[valName]._directives.push(new Watcher(item, 'innerHTML', this, valName))
-            }
-            if (item.hasAttribute('v-click')) {
-                let methodName = item.getAttribute('v-click')
-                item.onclick = this.$methods[methodName].bind(this.$data)
-            }
-        })
+      }
+    })
+  }
+  myVue.prototype._compile = function (root) {
+    if (!root) return
+    let children = Array.from(root.children)
+    children.forEach(item => {
+      if (item.children.length) {
+        this._compile(item)
+      }
+      if (item.hasAttribute('v-model')) {
+        let valName = item.getAttribute('v-model');
+        if (!this._binding.hasOwnProperty(valName)) {
+          this._binding[valName] = {
+            _directives: []
+          }
+        }
+        this._binding[valName]._directives.push(new Watcher(item, 'value', this, valName,))
+        item.addEventListener('input', () => {
+          this.$data[valName] = item.value;
+        });
+      }
+      if (item.hasAttribute('v-bind')) {
+        let valName = item.getAttribute('v-bind')
+        if (!this._binding.hasOwnProperty(valName)) {
+          this._binding[valName] = {
+            _directives: []
+          }
+        }
+        this._binding[valName]._directives.push(new Watcher(item, 'innerHTML', this, valName))
+      }
+      if (item.hasAttribute('v-click')) {
+        let methodName = item.getAttribute('v-click')
+        item.onclick = this.$methods[methodName].bind(this.$data)
+      }
+    })
 
-    }
+  }
 
-    function Watcher(realNode, attribute, vrNode, key) {
-        this.realNode = realNode
-        this.attribute = attribute
-        this.vrNode = vrNode
-        this.key = key
+  function Watcher(realNode, attribute, vrNode, key) {
+    this.realNode = realNode
+    this.attribute = attribute
+    this.vrNode = vrNode
+    this.key = key
 
-    }
+  }
 
-    Watcher.prototype.update = function () {
+  Watcher.prototype.update = function () {
 
-        this.realNode[this.attribute] = this.vrNode.$data[this.key]
-    }
-    window.onload = function () {
-        var app = new myVue({
-            el: '#app',
-            data: {
-                number: 0,
-                count: 0,
-            },
-            methods: {
-                increment: function () {
-                    this.number++;
-                },
-            }
-        })
-    }
+    this.realNode[this.attribute] = this.vrNode.$data[this.key]
+  }
+  window.onload = function () {
+    var app = new myVue({
+      el: '#app',
+      data: {
+        number: 0,
+        count: 0,
+      },
+      methods: {
+        increment: function () {
+          this.number++;
+        },
+      }
+    })
+  }
 </script>
 </html>

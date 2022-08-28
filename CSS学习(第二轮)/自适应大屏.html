@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            height: 100%;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        .index {
+            width: 1920px;
+            height: 1080px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            overflow: hidden;
+            transform: translate(-50%, -50%);
+            /*transform-origin: left top;*/
+        }
+
+        .index > .bg {
+            width: 100%;
+            height: 100%;
+            background-image: url("./pageBg.png");
+            background-position: center center;
+        }
+
+        .one-row {
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+        }
+        .two-row{
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+        }
+        .chart {
+            height: 480px;
+            margin: 20px;
+            background-color: rgba(19, 25, 47, 0.6);
+        }
+
+        .chart1 {
+            width: 30%;
+        }
+
+        .chart2 {
+            width: 40%;
+        }
+
+        .chart3 {
+            width: 30%;
+        }
+
+        .chart4{
+            width: 30%;
+        }
+        .chart5{
+            width: 40%;
+        }
+        .chart6{
+            width: 30%;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.6.0/echarts.min.js"
+            integrity="sha512-DKU/YbzvS2djMSn6emdaAkylv6QsENOnvbqeqyY/T/6q1u4FhhyettNXswpx2UHN1Nhgrq7fIcgni/43/23Zvw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+<div id="app" style="background-color: rgb(3,5,12);width: 100%;height: 100%">
+    <div class="index">
+        <div class="bg">
+            <div class="one-row">
+                <div class="chart1 chart" id="chart1"></div>
+                <div class="chart2 chart" id="chart2"></div>
+                <div class="chart3 chart" id="chart3"></div>
+            </div>
+            <div class="two-row">
+                <div class="chart4 chart" id="chart4"></div>
+                <div class="chart5 chart" id="chart5"></div>
+                <div class="chart6 chart" id="chart6"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script>
+    function calcRate() {
+        let indexRef = document.getElementsByClassName('index')[0]
+        if (!indexRef) return
+        let currentRate = (window.innerWidth / window.innerHeight).toFixed(5)
+        // * 设计稿尺寸（px）
+        const [baseWidth, baseHeight] = [1920, 1080]
+        // * 需保持的比例（默认1.77778）
+        const baseProportion = parseFloat((baseWidth / baseHeight).toFixed(5))
+        // 更宽
+        let [ratio_height, ratio_width] = [1, 1]
+        if (currentRate > baseProportion) {
+            ratio_width = ((window.innerHeight * baseProportion) / baseWidth).toFixed(5)
+            ratio_height = (window.innerHeight / baseHeight).toFixed(5)
+
+        } else {
+            ratio_width = (window.innerWidth / baseWidth).toFixed(5)
+            ratio_height = ((window.innerWidth / baseProportion) / baseHeight).toFixed(5)
+
+        }
+        indexRef.style.transform = `translate(-50%, -50%) scale(${ratio_width}, ${ratio_height})`
+    }
+
+    window.addEventListener('resize', calcRate)
+    calcRate()
+
+    function initChart(dom) {
+        let chart = echarts.init(dom)
+        let newData = {
+            xData: ["data1", "data2", "data3", "data4", "data5", "data6"],
+            seriesData: [
+                {value: 10, name: "data1"},
+                {value: 5, name: "data2"},
+                {value: 15, name: "data3"},
+                {value: 25, name: "data4"},
+                {value: 20, name: "data5"},
+                {value: 35, name: "data6"}
+            ]
+        }
+
+        let option = {
+            color: [
+                "#37a2da",
+                "#32c5e9",
+                "#9fe6b8",
+                "#ffdb5c",
+                "#ff9f7f",
+                "#fb7293",
+                "#e7bcf3",
+                "#8378ea"
+            ],
+            tooltip: {
+                trigger: "item",
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            toolbox: {
+                show: true
+            },
+            calculable: true,
+            legend: {
+                orient: "horizontal",
+                icon: "circle",
+                bottom: 0,
+                x: "center",
+                data: newData.xData,
+                textStyle: {
+                    color: "#fff"
+                }
+            },
+            series: [
+                {
+                    name: "通过率统计",
+                    type: "pie",
+                    radius: [10, 50],
+                    roseType: "area",
+                    center: ["50%", "40%"],
+                    data: newData.seriesData
+                }
+            ]
+        }
+        chart.setOption(option, true)
+    }
+
+    initChart(document.getElementById('chart1'))
+    initChart(document.getElementById('chart2'))
+    initChart(document.getElementById('chart4'))
+</script>
+</html>

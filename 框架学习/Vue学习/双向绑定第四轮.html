@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app" style="display: flex;align-items: center;justify-content: center">
+    <input type="text" v-model="number">
+    <button v-on="increment">增加</button>
+    <h3 v-bind="number"></h3>
+</div>
+</body>
+<script>
+  function MyVue(options) {
+    this.$options = options
+    this.$data = options.data()
+    this.$methods = options.methods
+    this.binding = {}
+    this.$el = document.getElementById(options.el)
+    this.__observer__(this.$data)
+    this.__compile__(this.$el)
+
+  }
+
+  MyVue.prototype.__observer__ = function (data) {
+    Object.keys(data).forEach(key => {
+      this.binding[key] = {
+        __directives: []
+      }
+      if (typeof data[key] === 'object') {
+        this.__observer__(data[key])
+      }
+      let value = data[key]
+      Object.defineProperty(this.$data, key, {
+        enumerable: true,
+        configurable: true,
+        get() {
+          return value
+        },
+        set: (newValue) => {
+          if (value !== newValue) {
+            value = newValue
+            this.binding[key].__directives.forEach(item => {
+              item.__update__()
+            })
+          }
+        }
+      })
+    })
+  }
+
+  MyVue.prototype.__compile__ = function (nodes) {
+    let children = Array.from(nodes.children)
+    children.forEach(child => {
+      if (child.children.length) {
+        this.__compile__(child)
+      }
+      if (child.hasAttribute('v-on')) {
+        let methodName = child.getAttribute('v-on')
+
+        child.onclick = this.$methods[methodName].bind(this.$data)
+      } else if (child.hasAttribute('v-bind')) {
+        let valueName = child.getAttribute('v-bind')
+        this.binding[valueName].__directives.push(new Watcher(this, valueName, child, 'innerHTML'))
+      } else if (child.hasAttribute('v-model')) {
+        let valueName = child.getAttribute('v-model')
+        this.binding[valueName].__directives.push(new Watcher(this, valueName, child, 'value'))
+        child.addEventListener('input', () => {
+          this.$data[valueName] = child.value;
+        });
+      }
+    })
+  }
+
+  function Watcher(vitureDom, valName, realDom, attributeName) {
+    this.vitureDom = vitureDom
+    this.valName = valName
+    this.realDom = realDom
+    this.attributeName = attributeName
+    console.log(this.vitureDom.$data['number'], this.valName)
+  }
+
+  Watcher.prototype.__update__ = function () {
+    this.realDom[this.attributeName] = this.vitureDom.$data[this.valName]
+  }
+  window.onload = function () {
+
+    new MyVue({
+      'el': 'app',
+      data: function () {
+        return {
+          number: 0
+        }
+      },
+      methods: {
+        increment() {
+          this.number++
+        }
+      }
+    })
+  }
+</script>
+</html>
